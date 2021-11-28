@@ -1,16 +1,21 @@
 Package: longterm
-Title: What the Package Does (One Line, Title Case)
+Title: Semiparametric Estimation of Long-Term Treatment Effects
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Authors@R: c(
+	person(given = "David", family = "Ritzwoller", role = c("aut", "cre"), email = "ritzwoll@stanford.edu"),
+	person(given = "Jiafeng", family = "Chen", role = c("aut"), email = "jiafengchen@g.harvard.edu"))
+Description: This package provides code for the semiparametric estimation of long-term 
+	treatment effects though the combination of short-term experimental and long-term observational datasets. In particular, this package is appropriate for setting in which only short-term outcomes are observed in an experimental data set with exogenously assigned treatment, both short-term and long-term outcomes are observed in an observational data set, where treatment assignment may be confounded, and the researcher is willing to assume that the causal relationships between treatment assignment and the short-term and long-term outcomes share the same unobserved confounding variables in the observational sample.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    rlang,
+    caret,
+    glmnet,
+    grf,
+    xgboost,
+    dplyr,
+    tidyselect
