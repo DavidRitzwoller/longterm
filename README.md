@@ -19,8 +19,7 @@ Science Foundation under the graduate research fellowship.
 
 ## Installation
 
-You can install the development version of `longterm` from
-[GitHub](https://github.com/) with:
+You can install `longterm` with:
 
 ``` r
 # install.packages("devtools")
