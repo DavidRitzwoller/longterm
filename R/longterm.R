@@ -25,8 +25,22 @@
 #' @param xgb_max_depth A float variable setting \code{max_depth} parameter for \code{xgboost} estimation.
 #' @param xgb_threads An integer variable setting the \code{nthread} parameter for \code{xgboost} estimation.
 #'
-#' @return A list with components \code{hat_tau}, \code{se} and \code{ci}. \code{hat_tau} is the estimate of the long-term average treatment effect. \code{se} is the estimate of the standard error. \code{ci} is a vector giving the lower and upper points of the confidence interval.
+#' @return Returns a list with three components: \describe{
+#'
+#' \item{\code{hat_tau}}{Estimate of the long-term average treatment effect.}
+#'
+#' \item{\code{se}}{Estimate of the standard error of the estimator.}
+#'
+#' \item{\code{ci}}{A vector giving the lower and upper points of the confidence interval.}
+#'
+#' }
 #' @export
+#'
+#' @references{
+#' \cite{Chen, J., & Ritzwoller, D. M. (2021).
+#' Semiparametric Estimation of Long-Term Treatment Effects.
+#' arXiv preprint arXiv:2107.14405.}
+#' }
 #'
 
 longterm <- function(data, S_vars, X_vars, Y_var, obs, estimand, type,
@@ -302,7 +316,7 @@ compute_xi_0 <- function(tau_0, data_nuisance, Y_var){
     mutate(xi_0_a = (observe / (1-pi))*(((1-gamma_s_x)/gamma_s_x)*((varrho_s_x - varrho_x)*(Y - nu_s_x)/(varrho_x*(1-varrho_x)))),
            xi_0_b = ((1-observe)/(1-pi))*((treatment*(nu_s_x - bar_nu_x_1)/varrho_x)
                                       -(1-treatment)*(nu_s_x - bar_nu_x_0)/(1 - varrho_x)
-                                      + (bar_nu_x_1 - bar_nu_x_0) - tau_1),
+                                      + (bar_nu_x_1 - bar_nu_x_0) - tau_0),
            xi_0 = xi_0_a + xi_0_b) %>%
     select(xi_0) %>%
     return()
@@ -312,19 +326,19 @@ compute_ci <- function(hat_tau, data_nuisance, Y_var, obs, estimand, alpha){
   ### Compute 95% confidence intervals
   if(obs == T){
     if(estimand == T){
-      influence <- compute_psi_1(tau, data_nuisance, Y_var)
+      influence <- compute_psi_1(hat_tau, data_nuisance, Y_var)
     } else {
-      influence <- compute_psi_0(tau, data_nuisance, Y_var)
+      influence <- compute_psi_0(hat_tau, data_nuisance, Y_var)
     }
   } else {
     if(estimand == T){
-      influence  <- compute_xi_1(tau, data_nuisance, Y_var)
+      influence  <- compute_xi_1(hat_tau, data_nuisance, Y_var)
     } else {
-      influence  <- compute_xi_0(tau, data_nuisance, Y_var)
+      influence  <- compute_xi_0(hat_tau, data_nuisance, Y_var)
     }
   }
   hat_V <- (1/nrow(influence))*sum(influence^2)
   ci_l <- hat_tau - qnorm(1-alpha/2, 0, 1)*sqrt(hat_V/nrow(influence))
   ci_h <- hat_tau + qnorm(1-alpha/2, 0, 1)*sqrt(hat_V/nrow(influence))
-  return(list(se = sqrt(hat_V), ci = c(ci_l, ci_h)))
+  return(list(se = sqrt(hat_V/nrow(influence)), ci = c(ci_l, ci_h)))
 }

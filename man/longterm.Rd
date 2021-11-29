@@ -72,9 +72,24 @@ longterm(
 \item{xgb_threads}{An integer variable setting the \code{nthread} parameter for \code{xgboost} estimation.}
 }
 \value{
-A list with components \code{hat_tau}, \code{se} and \code{ci}. \code{hat_tau} is the estimate of the long-term average treatment effect. \code{se} is the estimate of the standard error. \code{ci} is a vector giving the lower and upper points of the confidence interval.
+Returns a list with three components: \describe{
+
+\item{\code{hat_tau}}{Estimate of the long-term average treatment effect.}
+
+\item{\code{se}}{Estimate of the standard error of the estimator.}
+
+\item{\code{ci}}{A vector giving the lower and upper points of the confidence interval.}
+
+}
 }
 \description{
 \code{longterm} estimates the long-term average treatment effect of a binary treatment on a scalar long-term outcome
 using the semiparametric estimator developed in Chen and Ritzwoller (2021).
+}
+\references{
+{
+\cite{Chen, J., & Ritzwoller, D. M. (2021).
+Semiparametric Estimation of Long-Term Treatment Effects.
+arXiv preprint arXiv:2107.14405.}
+}
 }

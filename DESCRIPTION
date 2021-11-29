@@ -5,17 +5,26 @@ Authors@R: c(
 	person(given = "David", family = "Ritzwoller", role = c("aut", "cre"), email = "ritzwoll@stanford.edu"),
 	person(given = "Jiafeng", family = "Chen", role = c("aut"), email = "jiafengchen@g.harvard.edu"))
 Description: This package provides code for the semiparametric estimation of long-term 
-	treatment effects though the combination of short-term experimental and long-term observational datasets. In particular, this package is appropriate for setting in which only short-term outcomes are observed in an experimental data set with exogenously assigned treatment, both short-term and long-term outcomes are observed in an observational data set, where treatment assignment may be confounded, and the researcher is willing to assume that the causal relationships between treatment assignment and the short-term and long-term outcomes share the same unobserved confounding variables in the observational sample.
+	treatment effects though the combination of short-term experimental and long-term observational datasets. In particular, this package is appropriate for settings in which only short-term outcomes are observed in an experimental data set with exogenously assigned treatment, both short-term and long-term outcomes are observed in an observational data set, where treatment assignment may be confounded, and the researcher is willing to assume that the causal relationships between treatment assignment and the short-term and long-term outcomes share the same unobserved confounding variables in the observational sample. The implementation is based on Chen and Ritzwoller (2021) <arXiv:2107.14405>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports: 
+URL: https://https://github.com/DavidRitzwoller/longterm
+BugReports: https://https://github.com/DavidRitzwoller/longterm/issues
+Depends:
+    R (>= 2.10),
     rlang,
     caret,
     glmnet,
     grf,
     xgboost,
     dplyr,
-    tidyselect
+    tidyselect,
+    haven
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+    
